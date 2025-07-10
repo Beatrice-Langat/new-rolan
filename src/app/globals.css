@@ -1,0 +1,99 @@
+/* src/input.css (or your main CSS file) */
+
+/*
+   IMPORTANT: Ensure your build process is configured for Tailwind CSS v4.
+   This usually means running `tailwindcss --input ./src/input.css --output ./dist/output.css --watch`
+   or similar with your build tool.
+*/
+
+/* 1. Import Tailwind CSS core (essential for v4) */
+@import "tailwindcss";
+
+/* 2. Define your base CSS Variables (for dynamic theming like dark mode) */
+:root {
+  /* Color Palette */
+  --color-primary: #49CEBE;
+  --color-secondary: #11B6CB;
+  --color-dark: #152D53;
+  --color-purple: #55268C;
+  --color-accent: #AA33AA;
+
+  /* Background and Foreground */
+  --background: #ffffff;
+  --foreground: #152D53;
+
+  /* Font Families (ensure these fonts are loaded, e.g., via Google Fonts link in your HTML) */
+  --font-poppins: 'Poppins', sans-serif;
+  --font-barlow: 'Barlow', sans-serif;
+}
+
+/* 3. Dark mode styles using CSS variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #152D53;
+    --foreground: #ffffff;
+    /* Adjust other colors for dark mode if needed */
+    /* --color-primary: #dark-mode-primary-color; */
+  }
+}
+
+/* 4. Use the @theme at-rule to define your custom theme values for Tailwind */
+/*
+   In v4, `@theme` lets you define your design tokens directly in CSS.
+   These are then available via Tailwind's utility classes.
+*/
+@theme inline {
+  --color-primary: var(--color-primary); /* Maps Tailwind's primary to your CSS var */
+  --color-secondary: var(--color-secondary);
+  --color-dark: var(--color-dark);
+  --color-purple: var(--color-purple);
+  --color-accent: var(--color-accent);
+
+  /* New in v4: Directly map common theme properties to your CSS variables */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Define font families that can be used with `font-headline`, `font-paragraph` */
+  --font-headline: var(--font-poppins);
+  --font-paragraph: var(--font-barlow);
+
+  /*
+    You can also define other arbitrary values directly if they don't change
+    or don't need to be tied to a CSS variable.
+    Example: --spacing-large: 2rem;
+  */
+}
+
+/* 5. Base styles for body */
+body {
+  /*
+    You can now use theme() directly in your CSS or @apply with theme values.
+    Using CSS variables for background/color is robust for dark mode.
+  */
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-paragraph); /* Use your CSS variable directly */
+
+  /* You could also @apply these using theme values if you prefer: */
+  /* @apply bg-background text-foreground font-paragraph; */
+  /* Note: Tailwind v4 has better support for `theme()` inside CSS,
+     but using direct CSS variables for root-level styling is still a good pattern.
+  */
+}
+
+/* 6. Custom font weights (if needed, otherwise rely on Tailwind's default font weights) */
+/*
+   If you need specific font weights that aren't covered by Tailwind's defaults
+   (e.g., `font-normal`, `font-semibold`), you can add them here.
+   However, typically, `font-semibold` (600) and `font-normal` (400) would be
+   sufficient and handled by Tailwind's core.
+*/
+.font-headline-weight { /* Example if you need a specific weight for your headline font */
+  font-weight: 600;
+}
+
+/*
+   Removed all previous custom utility classes (.text-primary, .bg-secondary, etc.)
+   Tailwind CSS v4 will now generate these based on your `@theme` block,
+   and they will automatically pick up the values from your CSS variables.
+*/
